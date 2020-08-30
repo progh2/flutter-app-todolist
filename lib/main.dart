@@ -29,14 +29,13 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   final _items = <Todo>[];
 
-  // 할 일 문자열 조작을 위한 컨트롤러
-  var _todoController = TextEditingController();
 
-
-  @override
-  void dispose() {
-    _todoController.dispose();
-    super.dispose();
+  // 할 일 추가 메서드
+  void _addTodo(Todo todo){
+    setState(() {
+      _items.add(todo);
+      _todoController.text = '';
+    });
   }
 
   @override
@@ -58,7 +57,7 @@ class _TodoListPageState extends State<TodoListPage> {
                 ),
                 RaisedButton(
                   child: Text('추가'),
-                  onPressed: () {}, // TODO : 추가버튼처리
+                  onPressed: () => _addTodo(Todo(_todoController.text)),
                 )
               ],
             ),
@@ -83,9 +82,7 @@ class _TodoListPageState extends State<TodoListPage> {
 
   Widget _buildItemWidget(Todo todo){
     return ListTile(
-      onTap: () {
-        // TODO : 클릭 시 완료/취소 처리
-      },
+      onTap: () => _toggleTodo(todo),
       title: Text(
         todo.title,
         style: todo.isDone ? TextStyle(decoration: TextDecoration.lineThrough,
@@ -93,19 +90,9 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
       trailing: IconButton(
         icon : Icon(Icons.delete_forever),
-        onPressed: () {
-          // TODO : 쓰레기 버튼 클릭 시 삭제
-        } ,
+        onPressed: () => _deleteTodo(todo),
       ),
     );
-  }
-
-  // 할 일 추가 메서드
-  void _addTodo(Todo todo){
-    setState(() {
-      _items.add(todo);
-      _todoController.text = '';
-    });
   }
 
   // 할 일 삭제 메서드
@@ -117,8 +104,19 @@ class _TodoListPageState extends State<TodoListPage> {
 
   // 할 일 완료/미완료 메서드
   void _toggleTodo(Todo todo){
-      setState(() {
-        todo.isDone = !todo.isDone;
-      });
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
   }
+
+  // 할 일 문자열 조작을 위한 컨트롤러
+  var _todoController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    _todoController.dispose();
+    super.dispose();
+  }
+
 }
