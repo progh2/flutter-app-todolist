@@ -64,7 +64,7 @@ class _TodoListPageState extends State<TodoListPage> {
             ),
             Expanded(
               child: ListView(
-                children: <Widget>[],
+                children: _items.map((todo) => _buildItemWidget(todo)).toList(),
               ),
             )
           ],
@@ -72,6 +72,14 @@ class _TodoListPageState extends State<TodoListPage> {
       )
     );
   }
+
+//  List _getTodoList(){
+//    List<Widget> children = [];
+//    for( var item in _items){
+//      children.add(_buildItemWidget(item));
+//    }
+//    return children;
+//  }
 
   Widget _buildItemWidget(Todo todo){
     return ListTile(
