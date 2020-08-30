@@ -72,4 +72,23 @@ class _TodoListPageState extends State<TodoListPage> {
       )
     );
   }
+
+  Widget _buildItemWidget(Todo todo){
+    return ListTile(
+      onTap: () {
+        // TODO : 클릭 시 완료/취소 처리
+      },
+      title: Text(
+        todo.title,
+        style: todo.isDone ? TextStyle(decoration: TextDecoration.lineThrough,
+            fontStyle: FontStyle.italic) : TextStyle( fontWeight: FontWeight.bold),
+      ),
+      trailing: IconButton(
+        icon : Icon(Icons.delete_forever),
+        onPressed: () {
+          // TODO : 쓰레기 버튼 클릭 시 삭제
+        } ,
+      ),
+    );
+  }
 }
